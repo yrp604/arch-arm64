@@ -6,8 +6,8 @@
 
 /* construct IL from a register id, immediate */
 #define ILREG(R) il.Register(get_register_size(R), (R))
-#define ILSETREG(R,VALUE) il.SetRegister(get_register_size(R), (R), (VALUE))
-#define ILCONST(SZ,VAL) il.Const((SZ), (VAL))
+#define ILSETREG(R, VALUE) il.SetRegister(get_register_size(R), (R), (VALUE))
+#define ILCONST(SZ, VAL) il.Const((SZ), (VAL))
 
 /* helpers given a register id */
 #define REGSZ(R) get_register_size(R)
@@ -25,20 +25,19 @@
 
 /* construct IL from an InstructionOperand */
 #define ILREG_O(O) ExtractRegister(il, O, 0, REGSZ_O(O), false, REGSZ_O(O))
-#define ILSETREG_O(O,VALUE) il.SetRegister(REGSZ_O(O), REG_O(O), (VALUE))
-#define ILADDREG_O(O,VALUE) il.Add(REGSZ_O(O), ILREG_O(O), (VALUE))
-#define ILCONST_O(SZ,O) ExtractImmediate(il, (O), SZ)
+#define ILSETREG_O(O, VALUE) il.SetRegister(REGSZ_O(O), REG_O(O), (VALUE))
+#define ILADDREG_O(O, VALUE) il.Add(REGSZ_O(O), ILREG_O(O), (VALUE))
+#define ILCONST_O(SZ, O) ExtractImmediate(il, (O), SZ)
 
 /* determine stuff from operands */
-#define IS_ASIMD_O(O) ((O).operandClass==REG && IS_V_REG(REG_O(O)))
-#define IS_SVE_O(O) ((O).operandClass==REG && IS_SVE_REG(REG_O(O)))
+#define IS_ASIMD_O(O) ((O).operandClass == REG && IS_V_REG(REG_O(O)))
+#define IS_SVE_O(O) ((O).operandClass == REG && IS_SVE_REG(REG_O(O)))
 
 /* misc */
 #define SETFLAGS (instr.setflags ? IL_FLAGWRITE_ALL : IL_FLAGWRITE_NONE)
-#define ONES(N) (-1ULL >> (64-(N)))
-#define ABORT_LIFT \
-{ \
-	il.AddInstruction(il.Unimplemented()); \
-	break; \
-}
-
+#define ONES(N) (-1ULL >> (64 - (N)))
+#define ABORT_LIFT                             \
+	{                                          \
+		il.AddInstruction(il.Unimplemented()); \
+		break;                                 \
+	}
